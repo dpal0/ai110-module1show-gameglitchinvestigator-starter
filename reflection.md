@@ -6,8 +6,16 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What did the game look like the first time you ran it?
 - List at least two concrete bugs you noticed at the start  
+<<<<<<< HEAD
   (for example: "the secret number kept changing" or "the hints were backwards").
+The Hints given after submitting the number were never right.
+The new game button did not work properly
+The history isn't being updated properly, it counts a empty entry as valid entry and counts it in history
+Number of attempts left displayed is different that what is actually allowed
+=======
+  (for example: "the hints were backwards").
 
+>>>>>>> d28145213e029bd9f9244f5f8071e0985a5e266e
 ---
 
 ## 2. How did you use AI as a teammate?
