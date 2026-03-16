@@ -48,6 +48,9 @@ if "game_count" not in st.session_state:
 if "last_hint" not in st.session_state:
     st.session_state.last_hint = None
 
+if "last_proximity" not in st.session_state:
+    st.session_state.last_proximity = None
+
 st.subheader("Make a guess")
 
 st.info(
@@ -75,6 +78,7 @@ if new_game:
     st.session_state.history = []
     st.session_state.score = 0
     st.session_state.last_hint = None
+    st.session_state.last_proximity = None
     st.session_state.game_count += 1
     st.rerun()
 
@@ -99,6 +103,18 @@ if submit:
         secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
+
+        # Challenge 4: proximity-based hint styling
+        diff = abs(guess_int - secret)
+        if diff <= 5:
+            proximity = "hot"
+        elif diff <= 10:
+            proximity = "warm"
+        elif diff <= 20:
+            proximity = "cold"
+        else:
+            proximity = "far"
+        st.session_state.last_proximity = proximity
 
         if show_hint:
             st.session_state.last_hint = message
@@ -126,7 +142,18 @@ if submit:
                 )
 
 if show_hint and st.session_state.last_hint:
-    st.warning(st.session_state.last_hint)
+    proximity_data = st.session_state.get("last_proximity")
+    if proximity_data:
+        if proximity_data == "hot":
+            st.markdown(f'<p style="color: red; font-size: 1.1em; font-weight: bold;">🔥 {st.session_state.last_hint}</p>', unsafe_allow_html=True)
+        elif proximity_data == "warm":
+            st.markdown(f'<p style="color: red; font-size: 1.1em; font-weight: bold;">{st.session_state.last_hint}</p>', unsafe_allow_html=True)
+        elif proximity_data == "cold":
+            st.markdown(f'<p style="color: blue; font-size: 1.1em; font-weight: bold;">{st.session_state.last_hint}</p>', unsafe_allow_html=True)
+        else:
+            st.warning(st.session_state.last_hint)
+    else:
+        st.warning(st.session_state.last_hint)
 
 with st.expander("Developer Debug Info"):
     st.write("Secret:", st.session_state.secret)

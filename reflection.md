@@ -30,7 +30,7 @@ I used Claude code for this project. The AI suggested that
 - Did AI help you design or understand any tests? How?
 
 ---
-I mainly tested by running the website, but I somethings chaged the values in the tests writtien.
+I mainly tested by running the website manually, but I somethings chaged the values in the tests writtien.
 
 ## 4. What did you learn about Streamlit and state?
 
