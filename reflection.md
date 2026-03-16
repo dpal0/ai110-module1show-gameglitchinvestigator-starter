@@ -20,7 +20,7 @@ Number of attempts left displayed is different that what is actually allowed
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
 ---
-I used Claude code for this project. The AI suggested that 
+I used Claude code for this project. For this most of the suggestions were good and not misleading. It was very conservative and asked me many questions, I didn't allow it to write changes automatically and also I ran my own bash commands.
 
 ## 3. Debugging and testing your fixes
 
@@ -30,12 +30,12 @@ I used Claude code for this project. The AI suggested that
 - Did AI help you design or understand any tests? How?
 
 ---
-I mainly tested by running the website manually, but I somethings chaged the values in the tests writtien.
+I mainly tested by running the website manually, but I somethings chaged the values in the tests writtien. For example I put 586 which is greater than 100 which was wrong so I saw the test for it, there wasn't any, so I told AI to add that and refactor the code to validate input so that are in only place.
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
-
+Its like npm run dev but for python based code. So used it when you don't have a frontend file. Your front and backend both can be in python
 ---
 
 ## 5. Looking ahead: your developer habits
@@ -44,3 +44,5 @@ I mainly tested by running the website manually, but I somethings chaged the val
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+Testing habit:
+I really like agile testing and unit testing altough I am quite unfamiliar with python workflows, I will try to implement that in pyton workflows using AI after some research of my own. I think that going forward I will have to spend most of my time thinking of code and structuring my code.

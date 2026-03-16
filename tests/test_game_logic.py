@@ -1,3 +1,4 @@
+import pytest
 from logic_utils import check_guess, parse_guess, update_score, get_range_for_difficulty
 
 def test_winning_guess():
@@ -43,31 +44,25 @@ def test_check_guess_int_vs_int():
 
 # Tests for parse_guess
 
-def test_parse_guess_valid_integer():
-    ok, value, _ = parse_guess("42")
-    assert ok is True
-    assert value == 42
-    assert _ is None
-
-def test_parse_guess_valid_float_truncates():
-    ok, value, _ = parse_guess("7.9")
-    assert ok is True
-    assert value == 7
-
-def test_parse_guess_empty_string():
-    ok, value, _ = parse_guess("")
-    assert ok is False
-    assert value is None
-
-def test_parse_guess_none():
-    ok, value, _ = parse_guess(None)
-    assert ok is False
-    assert value is None
-
-def test_parse_guess_non_numeric():
-    ok, value, _ = parse_guess("abc")
-    assert ok is False
-    assert value is None
+@pytest.mark.parametrize("raw, expected_ok, expected_value", [
+    ("42",   True,  42),   # valid integer
+    ("7.9",  True,  7),    # float truncated to int
+    ("1",    True,  1),    # lower bound
+    ("100",  True,  100),  # upper bound
+    ("",     False, None), # empty string
+    (None,   False, None), # None input
+    ("abc",  False, None), # non-numeric
+    ("-5",   False, None), # negative (out of range)
+    ("0",    False, None), # zero (out of range)
+    ("101",  False, None), # above 100
+    ("   ",  False, None), # whitespace only
+])
+def test_validate_input(raw, expected_ok, expected_value):
+    ok, value, err = parse_guess(raw)
+    assert ok is expected_ok
+    assert value == expected_value
+    if not ok:
+        assert err is not None and len(err) > 0
 
 
 # Tests for update_score
@@ -218,27 +213,3 @@ def test_update_score_win_attempt_2():
     assert score == 70
 
 
-#FIX: additional parse_guess edge cases — zero, negative, whitespace, and error message presence
-
-def test_parse_guess_negative_number():
-    #FIX: negative numbers are valid integers and should parse successfully
-    ok, value, _ = parse_guess("-5")
-    assert ok is True
-    assert value == -5
-
-def test_parse_guess_zero():
-    #FIX: zero is a valid integer and should not be treated as falsy/empty
-    ok, value, _ = parse_guess("0")
-    assert ok is True
-    assert value == 0
-
-def test_parse_guess_whitespace_only():
-    #FIX: whitespace-only input is not a valid number and should return ok=False
-    ok, _, _ = parse_guess("   ")
-    assert ok is False
-
-def test_parse_guess_returns_error_message_on_invalid():
-    #FIX: invalid input returns a non-empty error message to display to the user
-    ok, _, err = parse_guess("xyz")
-    assert ok is False
-    assert err is not None and len(err) > 0
