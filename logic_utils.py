@@ -26,7 +26,7 @@ def parse_guess(raw: str):
     return True, value, None
 
 
-def check_guess(guess, secret):
+def check_guess(guess, secret): #FIX: Refactored logic into logic_utils.py
     if guess == secret:
         return "Win", "🎉 Correct!"
 
